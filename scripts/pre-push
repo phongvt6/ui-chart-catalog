@@ -1,0 +1,3 @@
+#!/bin/sh
+# Git pre-push hook — cài bằng: npm run hooks:install
+exec "$(git rev-parse --show-toplevel)/scripts/check-changelog.sh" --hook
