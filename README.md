@@ -33,7 +33,7 @@ npm run dev
 ```
 
 Dev server ở http://localhost:5179 (đã đăng ký trong `.claude/launch.json` ở
-thư mục gốc với tên `ui-catalog`).
+thư mục gốc với tên `ui-chart-catalog`).
 
 ```bash
 npm run build      # tsc -b rồi vite build -> dist/

@@ -3,7 +3,7 @@
  *
  * ⚠️ Dữ liệu ở đây phải luôn TRUNG TÍNH — không gắn với bất kỳ dự án, ngành
  * nghề hay khách hàng cụ thể nào, vì app này dùng làm reference cho nhiều dự
- * án khác nhau. Quy ước dùng chung với `ui-catalog`: đơn vị nghiệp vụ là
+ * án khác nhau. Quy ước dùng chung của app: đơn vị nghiệp vụ là
  * “chi nhánh” (CN-01…), danh mục là Thiết bị / Vật tư / Dịch vụ / Khác.
  *
  * Mọi biểu đồ vẽ trên cùng bộ số này, để so sánh trực tiếp được

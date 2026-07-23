@@ -17,10 +17,14 @@ const ChartArea = lazy(() => import('./chart/ChartArea'))
 
 type Theme = 'light' | 'dark'
 
+/**
+ * Mặc định là giao diện tối — cố ý KHÔNG theo cài đặt hệ điều hành: app dùng
+ * để soi component nên nền tối là bối cảnh chính, sáng là lựa chọn có chủ đích.
+ * Người dùng đã tự chọn thì tôn trọng lựa chọn đó.
+ */
 function initialTheme(): Theme {
   const saved = localStorage.getItem('ui-catalog-theme')
-  if (saved === 'light' || saved === 'dark') return saved
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  return saved === 'light' || saved === 'dark' ? saved : 'dark'
 }
 
 export default function App() {

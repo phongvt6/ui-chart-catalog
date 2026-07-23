@@ -33,25 +33,10 @@
   --mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-:root:not([data-theme='light']) .chart-scope {
-    color-scheme: dark;
-    --surface: #1a1a19;
-    --plane: #0d0d0d;
-    --ink: #ffffff;
-    --ink-2: #c3c2b7;
-    --ink-muted: #898781;
-    --grid: #2c2c2a;
-    --axis: #383835;
-    --border: rgba(255, 255, 255, 0.1);
-    --accent: #3987e5;
-    --accent-soft: #16283d;
-    --good: #0ca30c;
-    --bad: #e66767;
-    --code-bg: #121211;
-  }
+/* Không có khối @media (prefers-color-scheme) ở đây: app luôn tự đặt
+   data-theme (mặc định tối), nên bảng màu chỉ phụ thuộc lựa chọn của người
+   dùng chứ không phụ thuộc cài đặt hệ điều hành. */
 
-}
 
 :root[data-theme='dark'] .chart-scope {
   color-scheme: dark;

@@ -1,6 +1,6 @@
 # Changelog
 
-Mọi thay đổi đáng kể của **ui-catalog** được ghi ở đây.
+Mọi thay đổi đáng kể của **ui-chart-catalog** (Từ điển UI / Chart) được ghi ở đây.
 
 Định dạng theo [Keep a Changelog](https://keepachangelog.com/vi/1.1.0/),
 đánh số phiên bản theo [Semantic Versioning](https://semver.org/lang/vi/).
@@ -208,7 +208,7 @@ Nhóm thay đổi dùng đúng 6 nhãn sau: **Thêm mới** (tính năng mới) 
 - Chế độ sáng / tối, ghi nhớ lựa chọn trong `localStorage`.
 - Thư viện primitive `.d-*` trong `index.css` để viết demo mới nhanh và đồng nhất.
 
-[Chưa phát hành]: https://example.com/ui-catalog/compare/v0.3.0...HEAD
-[0.3.0]: https://example.com/ui-catalog/releases/tag/v0.3.0
-[0.2.0]: https://example.com/ui-catalog/releases/tag/v0.2.0
-[0.1.0]: https://example.com/ui-catalog/releases/tag/v0.1.0
+[Chưa phát hành]: https://example.com/ui-chart-catalog/compare/v0.3.0...HEAD
+[0.3.0]: https://example.com/ui-chart-catalog/releases/tag/v0.3.0
+[0.2.0]: https://example.com/ui-chart-catalog/releases/tag/v0.2.0
+[0.1.0]: https://example.com/ui-chart-catalog/releases/tag/v0.1.0

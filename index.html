@@ -1,8 +1,16 @@
 <!doctype html>
-<html lang="vi">
+<html lang="vi" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script>
+      // Đặt theme trước khi React chạy để không loé sáng một nhịp khi tải trang.
+      // Mặc định tối; chỉ sáng khi người dùng đã tự chọn.
+      try {
+        var t = localStorage.getItem('ui-catalog-theme')
+        document.documentElement.dataset.theme = t === 'light' ? 'light' : 'dark'
+      } catch (e) {}
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Từ điển UI / Chart — Component &amp; biểu đồ</title>
   </head>
