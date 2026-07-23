@@ -14,6 +14,14 @@ Nhóm thay đổi dùng đúng 6 nhãn sau: **Thêm mới** (tính năng mới) 
 
 ## [Chưa phát hành]
 
+### Thay đổi
+
+- **Tiêu đề nhóm ở sidebar nổi bật hơn** — mỗi nhóm giờ có dải nền riêng chạy
+  hết bề ngang, đường kẻ phân cách và số lượng nằm trong chip tròn bên phải, nên
+  ranh giới giữa các nhóm nhìn ra ngay khi lướt danh sách 89 mục.
+  - Tiêu đề **dính lại (sticky)** khi cuộn qua nhóm — luôn biết mình đang ở nhóm
+    nào mà không phải cuộn ngược lên.
+
 ### Thêm mới
 
 - **9 component nhóm ảnh** (`src/data/gallery.tsx`) — bổ sung vào nhóm *Media &

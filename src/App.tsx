@@ -161,9 +161,9 @@ export default function App() {
             </span>
           </button>
           {grouped.map((g) => (
-            <div key={g.category.id}>
+            <div key={g.category.id} className="side-group">
               <p className="side-group-head">
-                {g.category.nameVi} <span>({g.items.length})</span>
+                {g.category.nameVi} <span>{g.items.length}</span>
               </p>
               {g.items.map((e) => (
                 <button

@@ -194,24 +194,53 @@ pre {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
-  padding: 8px 8px 24px;
+  /* Không có padding-top để tiêu đề nhóm dính sát mép, không hở khe nhìn thấy
+     mục đang cuộn qua bên dưới. */
+  padding: 0 8px 24px;
+}
+
+.sidebar-list > .side-item:first-child {
+  margin-top: 8px;
+}
+
+/* Mỗi nhóm là một khối có ranh giới rõ; tiêu đề dính lại khi cuộn qua nhóm. */
+.side-group + .side-group {
+  margin-top: 8px;
 }
 
 .side-group-head {
+  position: sticky;
+  z-index: 1;
+  top: 0;
   display: flex;
-  align-items: baseline;
+  align-items: center;
+  justify-content: space-between;
   gap: 6px;
-  padding: 14px 8px 5px;
-  color: var(--fg-subtle);
+  /* Âm hai bên để dải nền chạy hết bề ngang sidebar, không thụt vào như item */
+  margin: 0 -8px 4px;
+  padding: 9px 17px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--fg-muted);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.07em;
   text-transform: uppercase;
 }
 
+/* Số lượng thành chip tròn để tách khỏi tên nhóm */
 .side-group-head span {
-  font-weight: 500;
+  min-width: 20px;
+  padding: 1px 6px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--fg-muted);
+  font-size: 10px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
   letter-spacing: 0;
+  text-align: center;
   text-transform: none;
 }
 
