@@ -16,15 +16,17 @@ export function NewPage({ entries }: { entries: CatalogEntry[] }) {
   const nameOfCategory = (id: string) => CATEGORIES.find((c) => c.id === id)?.nameVi ?? id
 
   return (
-    <div className="page">
+    <>
       <header className="page-head">
         <h1>Mới cập nhật</h1>
         <p className="page-lede">
-          Các đợt bổ sung component, mới nhất trước. Muốn đọc đầy đủ mọi thay đổi (kể cả sửa lỗi
+          Các đợt bổ sung của cả hai khu vực, mới nhất trước. Muốn đọc đầy đủ mọi thay đổi (kể cả sửa lỗi
           và chỉnh giao diện) thì xem{' '}
           <a href={hrefOf({ kind: 'changelog' })}>Nhật ký thay đổi</a>.
         </p>
       </header>
+
+      <h2 className="wn-h2">Component</h2>
 
       {batches.map((b) => {
         const inCats = [...new Set(b.items.map((e) => nameOfCategory(e.category)))]
@@ -51,6 +53,6 @@ export function NewPage({ entries }: { entries: CatalogEntry[] }) {
           </section>
         )
       })}
-    </div>
+    </>
   )
 }

@@ -14,8 +14,16 @@ Nhóm thay đổi dùng đúng 6 nhãn sau: **Thêm mới** (tính năng mới) 
 
 ## [Chưa phát hành]
 
+### Thay đổi
+
+- **Tên app thành “Từ điển UI / Chart”** cho đúng phạm vi sau khi gộp; logo mới
+  ghép khối giao diện với ba cột biểu đồ (dùng chung cho header và favicon).
+
 ### Thêm mới
 
+- **Trang Mới cập nhật giờ có cả khu Biểu đồ** — đọc `ENTRY_HISTORY` của
+  chart-catalog, chia theo phiên bản như phần Component. Mục biểu đồ chưa gắn
+  phiên bản được gom vào một khối riêng có hướng dẫn, thay vì im lặng biến mất.
 - **Gộp app chart-catalog vào đây — một app, hai khu vực.** Header có hai tab
   *Component (93)* và *Biểu đồ (56)*; đổi tab là sidebar đổi luôn sang danh sách
   nhóm của khu đó, nên mỗi lúc vẫn chỉ nhìn một danh sách ngắn.

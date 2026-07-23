@@ -135,14 +135,13 @@ pre {
 
 .brand-mark {
   display: grid;
+  flex: 0 0 auto;
   place-items: center;
   width: 28px;
   height: 28px;
-  border-radius: 7px;
+  border-radius: 8px;
   background: var(--accent);
   color: var(--accent-fg);
-  font-size: 13px;
-  font-weight: 700;
 }
 
 .brand-names {

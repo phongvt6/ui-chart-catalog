@@ -1,4 +1,4 @@
-# ui-catalog — Từ điển UI (Element & Component)
+# Từ điển UI / Chart
 
 **Bản đã triển khai: <https://ui-catalog-two.vercel.app>**
 
@@ -59,8 +59,11 @@ npm run lint
   tự thoát khỏi kết quả tìm kiếm.
 - **Link chia sẻ**: mỗi component có URL riêng dạng `#/<id>`, ví dụ
   http://localhost:5179/#/bottom-sheet — dán vào chat là người kia mở đúng mục.
-- **Mới cập nhật** (`#/moi`) liệt kê các đợt bổ sung component, mới nhất trước —
-  kèm ngày và số mục. Component thuộc đợt mới nhất có nhãn *Mới* trên thẻ.
+- **Mới cập nhật** (`#/moi`) liệt kê các đợt bổ sung của **cả hai khu vực**, mới
+  nhất trước — kèm ngày và số mục. Mục thuộc đợt mới nhất có nhãn *Mới* trên
+  thẻ. Nguồn: trường `since` của component và `src/chart/entries/history.ts` của
+  biểu đồ; biểu đồ chưa gắn phiên bản được gom vào một khối riêng có cảnh báo
+  thay vì im lặng biến mất.
 - **Nhật ký thay đổi** (`#/changelog`) hiển thị ngay trong app, đọc thẳng từ
   `CHANGELOG.md` lúc build — sửa file đó là trang trong app đổi theo.
 - **Nút ☾ / ☀** ở góc phải đổi sáng/tối, dùng để kiểm tra component ở cả hai chế độ.

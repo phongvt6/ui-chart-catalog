@@ -113,8 +113,17 @@ export default function App() {
     <div className="app">
       <header className="app-head">
         <a className="brand" href={hrefOf({ kind: 'home' })} title="Về trang chủ">
-          <span className="brand-mark">UI</span>
-          <span className="brand-names">Từ điển UI</span>
+          <span className="brand-mark" aria-hidden>
+            {/* Nửa trên là khối giao diện, nửa dưới là ba cột biểu đồ —
+                đúng hai khu vực của app. */}
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor">
+              <rect x="3" y="3.5" width="18" height="4" rx="1.4" opacity="0.55" />
+              <rect x="3" y="12" width="4.2" height="8.5" rx="1.3" />
+              <rect x="9.9" y="15" width="4.2" height="5.5" rx="1.3" opacity="0.75" />
+              <rect x="16.8" y="9.5" width="4.2" height="11" rx="1.3" />
+            </svg>
+          </span>
+          <span className="brand-names">Từ điển UI / Chart</span>
         </a>
 
         {/* Hai khu vực: đổi khu là đổi luôn danh sách nhóm ở sidebar */}
@@ -233,7 +242,12 @@ export default function App() {
         ) : route.kind === 'changelog' ? (
           <ChangelogPage />
         ) : route.kind === 'new' ? (
-          <NewPage entries={CATALOG} />
+          <div className="page">
+            <NewPage entries={CATALOG} />
+            <Suspense fallback={<p className="d-muted">Đang tải phần Biểu đồ…</p>}>
+              <ChartArea view={{ kind: 'new' }} />
+            </Suspense>
+          </div>
         ) : category ? (
           <CategoryPage
             category={category}
