@@ -6,9 +6,10 @@ import { HomePage } from './components/HomePage'
 import { CategoryPage } from './components/CategoryPage'
 import { SearchPage } from './components/SearchPage'
 import { ChangelogPage } from './components/ChangelogPage'
-import { NewPage } from './components/NewPage'
+import { NewPage, type NewTab } from './components/NewPage'
 import { areaOf, hrefOf, useRoute, type Area } from './lib/route'
 import { JOBS, CHART_COUNT, type ChartEntry } from './chart/types'
+import { newEntryIds } from './chart/entries/history'
 import type { ChartView } from './chart/ChartArea'
 
 /** ECharts nặng gần 1MB — chỉ tải khi người dùng thật sự mở khu vực Biểu đồ. */
@@ -33,6 +34,8 @@ export default function App() {
    * đầu, dù người dùng chỉ tra component.
    */
   const [charts, setCharts] = useState<ChartEntry[] | null>(null)
+  /** Trang “Mới cập nhật” tách hai khu thành hai tab. */
+  const [newTab, setNewTab] = useState<NewTab>('ui')
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme
@@ -243,10 +246,17 @@ export default function App() {
           <ChangelogPage />
         ) : route.kind === 'new' ? (
           <div className="page">
-            <NewPage entries={CATALOG} />
-            <Suspense fallback={<p className="d-muted">Đang tải phần Biểu đồ…</p>}>
-              <ChartArea view={{ kind: 'new' }} />
-            </Suspense>
+            <NewPage
+              entries={CATALOG}
+              tab={newTab}
+              onTab={setNewTab}
+              chartNewCount={newEntryIds.length}
+            />
+            {newTab === 'chart' && (
+              <Suspense fallback={<p className="d-muted">Đang tải phần Biểu đồ…</p>}>
+                <ChartArea view={{ kind: 'new' }} />
+              </Suspense>
+            )}
           </div>
         ) : category ? (
           <CategoryPage

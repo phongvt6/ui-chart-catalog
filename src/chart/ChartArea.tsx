@@ -91,7 +91,6 @@ function ChartWhatsNew() {
 
   return (
     <>
-      <h2 className="wn-h2">Biểu đồ</h2>
       {batches.map((b) => (
         <section className="job-block" key={b.release.version}>
           <div className="job-head">
