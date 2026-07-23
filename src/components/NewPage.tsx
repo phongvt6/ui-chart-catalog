@@ -19,9 +19,11 @@ interface Props {
  * dòng thời gian, không phải cuộn qua khu mình không quan tâm.
  */
 export function NewPage({ entries, tab, onTab, chartNewCount }: Props) {
+  // Mục mới được nối vào CUỐI lô trong `data/index.ts`, nên trong cùng một đợt
+  // thì phần tử càng về sau càng mới → đảo lại để mới nhất nằm trên cùng.
   const batches = RELEASES.map((r) => ({
     release: r,
-    items: entries.filter((e) => e.since === r.version),
+    items: entries.filter((e) => e.since === r.version).reverse(),
   })).filter((b) => b.items.length > 0)
 
   const nameOfCategory = (id: string) => CATEGORIES.find((c) => c.id === id)?.nameVi ?? id

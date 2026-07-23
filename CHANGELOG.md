@@ -14,6 +14,18 @@ Nhóm thay đổi dùng đúng 6 nhãn sau: **Thêm mới** (tính năng mới) 
 
 ## [Chưa phát hành]
 
+### Thay đổi
+
+- **Trang “Mới cập nhật” xếp mục mới nhất lên đầu trong từng đợt.** Trước đây
+  thứ tự trong một đợt là thứ tự nối lô ở `data/index.ts`, nên mục vừa thêm
+  nằm tận cuối lưới — đúng ngược với mục đích của trang.
+- **Cắt phiên bản 0.4.0** (`package.json` 0.0.0 → 0.4.0) và gộp các khối
+  trùng nhãn trong đợt này. Nhờ vậy trang “Mới cập nhật” hiện *Phiên bản
+  0.4.0* thay vì *Chưa phát hành* — nhãn cũ đến từ cờ `unreleased` trong
+  `RELEASES`, phản chiếu mục `[Chưa phát hành]` của changelog.
+
+## [0.4.0] – 2026-07-23
+
 ### Thêm mới
 
 - **Sticky vs. Fixed Positioning** (nhóm *Bố cục*) — một khung cuộn, ba nút đổi
@@ -25,23 +37,6 @@ Nhóm thay đổi dùng đúng 6 nhãn sau: **Thêm mới** (tính năng mới) 
   350ms / đóng 220ms, mở được bằng bàn phím và đóng bằng Esc, tự đổi hướng khi
   gần mép. Ghi rõ đây là mẫu chỉ dành cho chuột: thiết bị cảm ứng phải có
   đường đi khác.
-
-### Sửa lỗi
-
-- **Dashboard theo phễu: băng trên và bảng dưới giờ thẳng cột.** Dải băng là
-  lưới 4 cột trải hết bề ngang, còn bảng có thêm cột nhãn “Kênh” ở đầu — nên
-  mỗi nhóm cột lệch khỏi băng của nó đúng bằng bề rộng cột nhãn, phá đúng cái
-  mà mẫu này dựa vào. Hai tầng nay dùng chung một lưới (`--fb-head` + 4 track
-  bằng nhau), chung một khung cuộn ngang, khe giữa băng làm bằng `margin` để
-  không ăn vào track; tiêu đề con được xuống dòng thay vì bị cắt cụt.
-
-### Thay đổi
-
-- **Tên app thành “Từ điển UI / Chart”** cho đúng phạm vi sau khi gộp; logo mới
-  ghép khối giao diện với ba cột biểu đồ (dùng chung cho header và favicon).
-
-### Thêm mới
-
 - **Trang Mới cập nhật giờ có cả khu Biểu đồ**, tách thành **hai tab
   *Component* / *Chart*** — mỗi lần chỉ đọc một dòng thời gian, số trên tab là
   lượng mục vừa thêm ở đợt gần nhất. Phần biểu đồ đọc `ENTRY_HISTORY` của
@@ -62,36 +57,6 @@ Nhóm thay đổi dùng đúng 6 nhãn sau: **Thêm mới** (tính năng mới) 
   - **Bundle đầu không hề nặng thêm** (498 kB, trước khi gộp là 492 kB): ECharts
     (~1 MB) và toàn bộ code demo biểu đồ chỉ tải khi mở khu Biểu đồ hoặc khi gõ
     tìm kiếm.
-
-### Thay đổi
-
-- **Bố cục tổng đổi sang 3 cấp: trang chủ → trang nhóm → trang chi tiết**, học
-  từ app chart-catalog cùng bộ.
-  - **Sidebar gọn còn 13 dòng** (296px → 232px): *Tất cả*, 10 nhóm kèm số lượng,
-    *Nhật ký thay đổi*. Trước đây cột trái liệt kê cả 93 component nên cuộn mãi
-    không hết; giờ danh sách nằm ở trang nhóm. Sidebar cũng bỏ nền và viền phải
-    cho nhẹ mắt.
-  - **Trang riêng cho từng nhóm** (`#/nhom/<id>`) — chỉ component của nhóm đó,
-    kèm chip lọc **Tất cả / Web / Mobile** ngay trong trang.
-  - **Trang chi tiết có link `← <tên nhóm>`** để quay lại đúng chỗ vừa rời đi.
-  - **Ô tìm kiếm chuyển lên thanh trên cùng**; gõ vào là khung nội dung thành
-    trang kết quả gom theo nhóm, thay vì lọc danh sách ở cột trái. Đi tới bất kỳ
-    trang nào cũng tự thoát khỏi kết quả tìm kiếm.
-  - Trên màn hẹp, sidebar thành một dải nhóm cuộn ngang thay vì chiếm 40% chiều
-    cao màn hình.
-  - **Tên app trên header to và rõ hơn** (17px): bỏ dòng phụ “93 component · 10
-    nhóm” — số lượng đã có sẵn ngay cạnh từng nhóm ở sidebar.
-
-### Gỡ bỏ
-
-- **Hai combobox lọc (nhóm, nền tảng) ở đầu sidebar** — lọc nhóm nay là chính
-  sidebar, lọc nền tảng thành chip trong trang nhóm. `Combobox.tsx` và phần CSS
-  `.combo-*` đã xoá.
-- Dải chip “nhảy tới nhóm” và nút *Chỉ xem nhóm này* ở trang chủ — thay bằng
-  link *Mở nhóm (N) →* và tiêu đề nhóm bấm được.
-
-### Thêm mới
-
 - **Trang “Mới cập nhật”** (`#/moi`) — xem nhanh đợt nào vừa thêm những gì, xếp
   mới nhất trước, mỗi đợt kèm ngày, số mục và các nhóm bị ảnh hưởng. Trước đây
   muốn biết có gì mới phải đọc changelog rồi tự đi tìm từng mục.
@@ -155,12 +120,44 @@ Nhóm thay đổi dùng đúng 6 nhãn sau: **Thêm mới** (tính năng mới) 
 
 ### Thay đổi
 
+- **Tên app thành “Từ điển UI / Chart”** cho đúng phạm vi sau khi gộp; logo mới
+  ghép khối giao diện với ba cột biểu đồ (dùng chung cho header và favicon).
+- **Bố cục tổng đổi sang 3 cấp: trang chủ → trang nhóm → trang chi tiết**, học
+  từ app chart-catalog cùng bộ.
+  - **Sidebar gọn còn 13 dòng** (296px → 232px): *Tất cả*, 10 nhóm kèm số lượng,
+    *Nhật ký thay đổi*. Trước đây cột trái liệt kê cả 93 component nên cuộn mãi
+    không hết; giờ danh sách nằm ở trang nhóm. Sidebar cũng bỏ nền và viền phải
+    cho nhẹ mắt.
+  - **Trang riêng cho từng nhóm** (`#/nhom/<id>`) — chỉ component của nhóm đó,
+    kèm chip lọc **Tất cả / Web / Mobile** ngay trong trang.
+  - **Trang chi tiết có link `← <tên nhóm>`** để quay lại đúng chỗ vừa rời đi.
+  - **Ô tìm kiếm chuyển lên thanh trên cùng**; gõ vào là khung nội dung thành
+    trang kết quả gom theo nhóm, thay vì lọc danh sách ở cột trái. Đi tới bất kỳ
+    trang nào cũng tự thoát khỏi kết quả tìm kiếm.
+  - Trên màn hẹp, sidebar thành một dải nhóm cuộn ngang thay vì chiếm 40% chiều
+    cao màn hình.
+  - **Tên app trên header to và rõ hơn** (17px): bỏ dòng phụ “93 component · 10
+    nhóm” — số lượng đã có sẵn ngay cạnh từng nhóm ở sidebar.
 - Vào app không kèm hash thì mở **trang chủ**, thay vì tự nhảy vào component
   đầu tiên như trước.
 - Chọn một component sẽ cuộn khung nội dung về đầu trang.
 
+### Gỡ bỏ
+
+- **Hai combobox lọc (nhóm, nền tảng) ở đầu sidebar** — lọc nhóm nay là chính
+  sidebar, lọc nền tảng thành chip trong trang nhóm. `Combobox.tsx` và phần CSS
+  `.combo-*` đã xoá.
+- Dải chip “nhảy tới nhóm” và nút *Chỉ xem nhóm này* ở trang chủ — thay bằng
+  link *Mở nhóm (N) →* và tiêu đề nhóm bấm được.
+
 ### Sửa lỗi
 
+- **Dashboard theo phễu: băng trên và bảng dưới giờ thẳng cột.** Dải băng là
+  lưới 4 cột trải hết bề ngang, còn bảng có thêm cột nhãn “Kênh” ở đầu — nên
+  mỗi nhóm cột lệch khỏi băng của nó đúng bằng bề rộng cột nhãn, phá đúng cái
+  mà mẫu này dựa vào. Hai tầng nay dùng chung một lưới (`--fb-head` + 4 track
+  bằng nhau), chung một khung cuộn ngang, khe giữa băng làm bằng `margin` để
+  không ăn vào track; tiêu đề con được xuống dòng thay vì bị cắt cụt.
 - **Nút sao chép code thất bại trong im lặng.** `navigator.clipboard.writeText`
   có thể bị từ chối (không phải secure context, tài liệu không được focus) —
   trước đây promise bị bỏ rơi, giao diện không báo gì cả. Nay có phương án dự
@@ -229,7 +226,8 @@ Nhóm thay đổi dùng đúng 6 nhãn sau: **Thêm mới** (tính năng mới) 
 - Chế độ sáng / tối, ghi nhớ lựa chọn trong `localStorage`.
 - Thư viện primitive `.d-*` trong `index.css` để viết demo mới nhanh và đồng nhất.
 
-[Chưa phát hành]: https://example.com/ui-chart-catalog/compare/v0.3.0...HEAD
+[Chưa phát hành]: https://example.com/ui-chart-catalog/compare/v0.4.0...HEAD
+[0.4.0]: https://example.com/ui-chart-catalog/releases/tag/v0.4.0
 [0.3.0]: https://example.com/ui-chart-catalog/releases/tag/v0.3.0
 [0.2.0]: https://example.com/ui-chart-catalog/releases/tag/v0.2.0
 [0.1.0]: https://example.com/ui-chart-catalog/releases/tag/v0.1.0
