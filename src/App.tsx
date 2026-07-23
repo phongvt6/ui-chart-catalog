@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useState } from 'react'
 import { CATALOG, deaccent } from './data'
-import { CATEGORIES, type CategoryId, type Platform } from './types'
-import { Combobox } from './components/Combobox'
+import { CATEGORIES } from './types'
 import { EntryDetail } from './components/EntryDetail'
 import { HomePage } from './components/HomePage'
+import { CategoryPage } from './components/CategoryPage'
+import { SearchPage } from './components/SearchPage'
 import { ChangelogPage } from './components/ChangelogPage'
+import { hrefOf, useRoute } from './lib/route'
 
 type Theme = 'light' | 'dark'
 
@@ -14,83 +16,58 @@ function initialTheme(): Theme {
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 }
 
-function idFromHash(): string {
-  return decodeURIComponent(window.location.hash.replace(/^#\/?/, ''))
-}
-
-/** Các trang không phải component: '' là trang chủ. */
-const STATIC_PAGES = ['', 'changelog']
-
 export default function App() {
   const [theme, setTheme] = useState<Theme>(initialTheme)
   const [query, setQuery] = useState('')
-  const [category, setCategory] = useState<CategoryId | ''>('')
-  const [platform, setPlatform] = useState<Platform | ''>('')
-  // Chuỗi rỗng = đang ở trang chủ.
-  const [selectedId, setSelectedId] = useState<string>(() => idFromHash())
+  const route = useRoute()
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme
     localStorage.setItem('ui-catalog-theme', theme)
   }, [theme])
 
-  useEffect(() => {
-    const onHash = () => {
-      const id = idFromHash()
-      if (STATIC_PAGES.includes(id) || CATALOG.some((e) => e.id === id)) setSelectedId(id)
-    }
-    window.addEventListener('hashchange', onHash)
-    return () => window.removeEventListener('hashchange', onHash)
-  }, [])
+  // Trang kết quả tìm kiếm che khung nội dung, nên đi tới bất kỳ đâu (sidebar,
+  // thẻ, breadcrumb) đều phải tự thoát khỏi nó — nếu không sẽ như bấm hụt.
+  useEffect(() => setQuery(''), [route])
 
-  const select = (id: string) => {
-    setSelectedId(id)
-    window.location.hash = `/${id}`
-    document.querySelector('.main')?.scrollTo({ top: 0 })
-  }
-
-  const goHome = () => select('')
-
-  const visible = useMemo(() => {
+  const results = useMemo(() => {
     const q = deaccent(query.trim())
+    if (!q) return []
     return CATALOG.filter((e) => {
-      if (category && e.category !== category) return false
-      if (platform && !e.platforms.includes(platform)) return false
-      if (!q) return true
       const haystack = deaccent(
         [e.nameEn, e.nameVi, ...(e.aliases ?? []), e.description, e.purpose].join(' '),
       )
       return haystack.includes(q)
     })
-  }, [query, category, platform])
+  }, [query])
 
-  const grouped = useMemo(
-    () =>
-      CATEGORIES.map((c) => ({ category: c, items: visible.filter((e) => e.category === c.id) })).filter(
-        (g) => g.items.length > 0,
-      ),
-    [visible],
-  )
+  const searching = query.trim().length > 0
+  const entry = route.kind === 'entry' ? CATALOG.find((e) => e.id === route.id) : undefined
+  const category =
+    route.kind === 'category' ? CATEGORIES.find((c) => c.id === route.id) : undefined
 
-  const selected = CATALOG.find((e) => e.id === selectedId)
-
-  const categoryOptions = CATEGORIES.map((c) => ({
-    value: c.id,
-    label: `${c.nameVi} · ${c.nameEn}`,
-    count: CATALOG.filter((e) => e.category === c.id).length,
-  }))
+  const countOf = (id: string) => CATALOG.filter((e) => e.category === id).length
 
   return (
     <div className="app">
       <header className="app-head">
-        <button type="button" className="brand" onClick={goHome} title="Về trang chủ">
+        <a className="brand" href={hrefOf({ kind: 'home' })} title="Về trang chủ">
           <span className="brand-mark">UI</span>
-          Từ điển UI — Element &amp; Component
-        </button>
-        <div className="head-spacer" />
-        <span className="head-stat">
-          {visible.length}/{CATALOG.length} component
-        </span>
+          <span className="brand-names">
+            Từ điển UI
+            <em>{CATALOG.length} component · {CATEGORIES.length} nhóm</em>
+          </span>
+        </a>
+
+        <input
+          className="head-search"
+          type="search"
+          placeholder="Tìm: ô nhập, lightbox, gantt… (gõ không dấu cũng được)"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          aria-label="Tìm component"
+        />
+
         <button
           type="button"
           className="icon-btn"
@@ -103,110 +80,65 @@ export default function App() {
       </header>
 
       <aside className="sidebar">
-        <div className="sidebar-filters">
-          <input
-            className="combo-input"
-            type="search"
-            placeholder="Tìm theo tên, mô tả… (gõ không dấu cũng được)"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            aria-label="Tìm component"
-          />
-          <Combobox
-            options={categoryOptions}
-            value={category}
-            onChange={(v) => setCategory(v as CategoryId | '')}
-            allLabel="Tất cả nhóm"
-            placeholder="Lọc theo nhóm…"
-          />
-          <Combobox
-            options={[
-              { value: 'web', label: 'Web', count: CATALOG.filter((e) => e.platforms.includes('web')).length },
-              {
-                value: 'mobile',
-                label: 'Mobile',
-                count: CATALOG.filter((e) => e.platforms.includes('mobile')).length,
-              },
-            ]}
-            value={platform}
-            onChange={(v) => setPlatform(v as Platform | '')}
-            allLabel="Cả hai nền tảng"
-            placeholder="Lọc theo nền tảng…"
-          />
-        </div>
+        <nav className="nav" aria-label="Điều hướng chính">
+          <a
+            className={!searching && route.kind === 'home' ? 'nav-item is-active' : 'nav-item'}
+            href={hrefOf({ kind: 'home' })}
+          >
+            Tất cả
+            <span className="nav-count">{CATALOG.length}</span>
+          </a>
 
-        <nav className="sidebar-list">
-          <button
-            type="button"
-            className="side-item is-home"
-            aria-current={selectedId === ''}
-            onClick={goHome}
+          <div className="nav-sep" />
+
+          {CATEGORIES.map((c) => {
+            const active = !searching && route.kind === 'category' && route.id === c.id
+            return (
+              <a
+                key={c.id}
+                className={active ? 'nav-item is-active' : 'nav-item'}
+                href={hrefOf({ kind: 'category', id: c.id })}
+              >
+                {c.nameVi}
+                <span className="nav-count">{countOf(c.id)}</span>
+              </a>
+            )
+          })}
+
+          <div className="nav-sep" />
+
+          <a
+            className={!searching && route.kind === 'changelog' ? 'nav-item is-active' : 'nav-item'}
+            href={hrefOf({ kind: 'changelog' })}
           >
-            <span aria-hidden>⌂</span>
-            <span className="side-item-names">
-              <span className="side-item-en">Trang chủ</span>
-              <span className="side-item-vi">Toàn bộ {CATALOG.length} component</span>
-            </span>
-          </button>
-          <button
-            type="button"
-            className="side-item is-home"
-            aria-current={selectedId === 'changelog'}
-            onClick={() => select('changelog')}
-          >
-            <span aria-hidden>✦</span>
-            <span className="side-item-names">
-              <span className="side-item-en">Nhật ký thay đổi</span>
-              <span className="side-item-vi">App có gì mới</span>
-            </span>
-          </button>
-          {grouped.map((g) => (
-            <div key={g.category.id} className="side-group">
-              <p className="side-group-head">
-                {g.category.nameVi} <span>{g.items.length}</span>
-              </p>
-              {g.items.map((e) => (
-                <button
-                  type="button"
-                  key={e.id}
-                  className="side-item"
-                  aria-current={e.id === selectedId}
-                  ref={(el) => {
-                    // Vào thẳng bằng link #/<id> — kéo mục đang chọn vào tầm nhìn.
-                    if (el && e.id === selectedId) el.scrollIntoView({ block: 'nearest' })
-                  }}
-                  onClick={() => select(e.id)}
-                >
-                  <span className="side-item-names">
-                    <span className="side-item-en">{e.nameEn}</span>
-                    <span className="side-item-vi">{e.nameVi}</span>
-                  </span>
-                </button>
-              ))}
-            </div>
-          ))}
-          {grouped.length === 0 && (
-            <p className="side-empty">
-              Không tìm thấy component nào khớp “{query}”.
-              <br />
-              Thử bỏ bớt bộ lọc.
-            </p>
-          )}
+            Nhật ký thay đổi
+          </a>
         </nav>
       </aside>
 
       <main className="main">
-        {selectedId === 'changelog' ? (
+        {searching ? (
+          <SearchPage query={query.trim()} results={results} onClear={() => setQuery('')} />
+        ) : route.kind === 'changelog' ? (
           <ChangelogPage />
-        ) : selected ? (
-          <EntryDetail entry={selected} key={selected.id} />
-        ) : (
-          <HomePage
-            entries={visible}
-            total={CATALOG.length}
-            onOpen={select}
-            onPickCategory={setCategory}
+        ) : category ? (
+          <CategoryPage
+            category={category}
+            entries={CATALOG.filter((e) => e.category === category.id)}
           />
+        ) : entry ? (
+          <EntryDetail entry={entry} key={entry.id} />
+        ) : route.kind === 'entry' || route.kind === 'category' ? (
+          <div className="page">
+            <div className="empty-state">
+              <strong>Không có mục này</strong>
+              <span>
+                Link có thể đã cũ. <a href={hrefOf({ kind: 'home' })}>Về trang chủ</a>
+              </span>
+            </div>
+          </div>
+        ) : (
+          <HomePage entries={CATALOG} total={CATALOG.length} />
         )}
       </main>
     </div>

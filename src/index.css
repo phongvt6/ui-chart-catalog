@@ -28,7 +28,7 @@
   --shadow-lg: 0 16px 48px rgb(16 18 24 / 16%);
   --radius: 8px;
   --radius-lg: 14px;
-  --sidebar-w: 296px;
+  --sidebar-w: 232px;
 
   color-scheme: light;
 }
@@ -143,18 +143,47 @@ pre {
   font-weight: 700;
 }
 
-.head-spacer {
-  flex: 1;
+.brand-names {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
 }
 
-.head-stat {
+.brand-names em {
   color: var(--fg-subtle);
-  font-size: 12.5px;
-  font-variant-numeric: tabular-nums;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+/* Ô tìm kiếm nằm trên header: gõ vào là cả khung nội dung thành trang kết quả,
+   nhờ vậy sidebar chỉ còn việc chuyển nhóm. */
+.head-search {
+  flex: 1;
+  max-width: 440px;
+  margin-left: 10px;
+  padding: 7px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--fg);
+  font: inherit;
+  font-size: 13.5px;
+  outline: none;
+}
+
+.head-search:focus {
+  border-color: var(--accent);
+  background: var(--surface);
+}
+
+.head-search::placeholder {
+  color: var(--fg-subtle);
 }
 
 .icon-btn {
   display: grid;
+  margin-left: auto;
   place-items: center;
   width: 32px;
   height: 32px;
@@ -178,123 +207,53 @@ pre {
   display: flex;
   flex-direction: column;
   min-height: 0;
-  border-right: 1px solid var(--border);
-  background: var(--surface);
 }
 
-.sidebar-filters {
+/* Sidebar chỉ là bộ chuyển nhóm — danh sách component nằm ở trang nhóm.
+   Không nền, không viền: nhìn nhẹ và nhường chỗ cho khung nội dung. */
+.nav {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 12px;
-  border-bottom: 1px solid var(--border);
-}
-
-.sidebar-list {
-  flex: 1;
-  min-height: 0;
+  gap: 2px;
+  padding: 16px 10px 28px;
   overflow-y: auto;
-  /* Không có padding-top để tiêu đề nhóm dính sát mép, không hở khe nhìn thấy
-     mục đang cuộn qua bên dưới. */
-  padding: 0 8px 24px;
 }
 
-.sidebar-list > .side-item:first-child {
-  margin-top: 8px;
-}
-
-/* Mỗi nhóm là một khối có ranh giới rõ; tiêu đề dính lại khi cuộn qua nhóm. */
-.side-group + .side-group {
-  margin-top: 8px;
-}
-
-.side-group-head {
-  position: sticky;
-  z-index: 1;
-  top: 0;
+.nav-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 6px;
-  /* Âm hai bên để dải nền chạy hết bề ngang sidebar, không thụt vào như item */
-  margin: 0 -8px 4px;
-  padding: 9px 17px;
-  border-bottom: 1px solid var(--border);
-  background: var(--surface-2);
-  color: var(--fg-muted);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-}
-
-/* Số lượng thành chip tròn để tách khỏi tên nhóm */
-.side-group-head span {
-  min-width: 20px;
-  padding: 1px 6px;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: var(--surface);
-  color: var(--fg-muted);
-  font-size: 10px;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0;
-  text-align: center;
-  text-transform: none;
-}
-
-.side-item {
-  display: flex;
-  align-items: center;
   gap: 8px;
-  width: 100%;
-  padding: 6px 9px;
-  border: 0;
-  border-radius: 7px;
-  background: transparent;
-  color: var(--fg);
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
+  padding: 7px 11px;
+  border-radius: 8px;
+  color: var(--fg-muted);
+  font-size: 13.5px;
+  text-decoration: none;
 }
 
-.side-item:hover {
+.nav-item:hover {
   background: var(--surface-2);
+  color: var(--fg);
 }
 
-.side-item[aria-current='true'] {
-  background: var(--accent-soft);
-  color: var(--accent);
+.nav-item.is-active {
+  background: var(--surface-2);
+  box-shadow: inset 2px 0 0 var(--accent);
+  color: var(--fg);
   font-weight: 600;
 }
 
-.side-item-names {
-  min-width: 0;
-  flex: 1;
-}
-
-.side-item-en {
-  display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.side-item-vi {
-  display: block;
-  overflow: hidden;
+.nav-count {
   color: var(--fg-subtle);
-  font-size: 12px;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
   font-weight: 400;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
-.side-empty {
-  padding: 28px 12px;
-  color: var(--fg-subtle);
-  text-align: center;
+.nav-sep {
+  height: 1px;
+  margin: 9px 11px;
+  background: var(--border);
 }
 
 /* ---- Main pane ---- */
@@ -612,8 +571,10 @@ pre {
   display: grid;
   place-content: center;
   gap: 6px;
-  height: 100%;
-  padding: 40px;
+  padding: 48px 40px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
   color: var(--fg-subtle);
   text-align: center;
 }
@@ -621,18 +582,18 @@ pre {
 /* ==========================================================================
    Trang chủ — thư viện toàn bộ component
    ========================================================================== */
-.hp {
+.page {
   max-width: 1240px;
   margin: 0 auto;
   padding: 26px 28px 80px;
 }
 
-.hp-hero {
-  max-width: 720px;
-  margin-bottom: 26px;
+.page-head {
+  max-width: 760px;
+  margin-bottom: 22px;
 }
 
-.hp-hero h1 {
+.page-head h1 {
   margin: 0 0 8px;
   font-size: 30px;
   font-weight: 690;
@@ -640,41 +601,77 @@ pre {
   line-height: 1.18;
 }
 
-.hp-hero p {
+.page-lede {
   margin: 0;
   color: var(--fg-muted);
   font-size: 15px;
 }
 
-.hp-jump {
+.page-en {
+  color: var(--fg-subtle);
+}
+
+/* Chip lọc nền tảng ở trang nhóm */
+.chip-row {
   display: flex;
   flex-wrap: wrap;
   gap: 7px;
   margin-top: 16px;
 }
 
-.hp-jump a {
+.chip {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 4px 11px;
+  padding: 4px 12px;
   border: 1px solid var(--border);
   border-radius: 999px;
   background: var(--surface);
   color: var(--fg-muted);
+  font: inherit;
   font-size: 12.5px;
-  text-decoration: none;
+  cursor: pointer;
 }
 
-.hp-jump a:hover {
+.chip:hover {
+  border-color: var(--accent-border);
+  color: var(--fg);
+}
+
+.chip.is-on {
   border-color: var(--accent-border);
   background: var(--accent-soft);
   color: var(--accent);
+  font-weight: 600;
 }
 
-.hp-jump span {
+.chip span {
   color: var(--fg-subtle);
   font-variant-numeric: tabular-nums;
+  font-weight: 400;
+}
+
+.link-btn {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Đường lùi về trang nhóm ở đầu trang chi tiết */
+.back-link {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: var(--fg-muted);
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  color: var(--accent);
 }
 
 .hp-group {
@@ -690,6 +687,15 @@ pre {
   margin-bottom: 14px;
   padding-bottom: 10px;
   border-bottom: 1px solid var(--border);
+}
+
+.hp-group-head h2 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.hp-group-head h2 a:hover {
+  color: var(--accent);
 }
 
 .hp-group-head h2 {
@@ -714,7 +720,8 @@ pre {
 .hp-grid {
   display: grid;
   gap: 16px;
-  grid-template-columns: repeat(auto-fill, minmax(288px, 1fr));
+  /* min() để trên màn hẹp thẻ co lại thay vì tràn ngang */
+  grid-template-columns: repeat(auto-fill, minmax(min(288px, 100%), 1fr));
 }
 
 .hp-card {
@@ -803,22 +810,39 @@ pre {
   text-decoration: none;
 }
 
-.side-item.is-home {
-  margin-bottom: 4px;
-}
-
 @media (max-width: 900px) {
-  .hp {
+  .page {
     padding: 18px 16px 60px;
   }
 
-  .hp-hero h1 {
+  .page-head h1 {
     font-size: 23px;
   }
 
   .hp-group-head {
     flex-direction: column;
     gap: 8px;
+  }
+
+  /* Header: nhường hết chỗ còn lại cho ô tìm kiếm */
+  .app-head {
+    gap: 8px;
+    padding: 0 12px;
+  }
+
+  .brand-names em {
+    display: none;
+  }
+
+  .head-search {
+    min-width: 0;
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .brand-names {
+    display: none;
   }
 }
 
@@ -968,108 +992,6 @@ pre {
   .cl {
     padding: 20px 16px 60px;
   }
-}
-
-/* ==========================================================================
-   Combobox (bộ lọc gõ-để-tìm)
-   ========================================================================== */
-.combo {
-  position: relative;
-}
-
-.combo-input {
-  width: 100%;
-  padding: 7px 30px 7px 10px;
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius);
-  background: var(--surface);
-  color: var(--fg);
-  font: inherit;
-  font-size: 13px;
-}
-
-.combo-input:focus {
-  border-color: var(--accent);
-  outline: 2px solid var(--accent-soft);
-}
-
-.combo-caret {
-  position: absolute;
-  top: 50%;
-  right: 9px;
-  transform: translateY(-50%);
-  color: var(--fg-subtle);
-  font-size: 10px;
-  pointer-events: none;
-}
-
-.combo-clear {
-  position: absolute;
-  top: 50%;
-  right: 6px;
-  width: 20px;
-  height: 20px;
-  transform: translateY(-50%);
-  border: 0;
-  border-radius: 50%;
-  background: var(--surface-3);
-  color: var(--fg-muted);
-  font-size: 11px;
-  line-height: 1;
-  cursor: pointer;
-}
-
-.combo-pop {
-  position: absolute;
-  z-index: 30;
-  top: calc(100% + 4px);
-  right: 0;
-  left: 0;
-  max-height: 260px;
-  overflow-y: auto;
-  padding: 4px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface);
-  box-shadow: var(--shadow-md);
-}
-
-.combo-opt {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  width: 100%;
-  padding: 6px 9px;
-  border: 0;
-  border-radius: 6px;
-  background: transparent;
-  color: var(--fg);
-  font: inherit;
-  font-size: 13px;
-  text-align: left;
-  cursor: pointer;
-}
-
-.combo-opt.is-active {
-  background: var(--surface-2);
-}
-
-.combo-opt[aria-selected='true'] {
-  color: var(--accent);
-  font-weight: 600;
-}
-
-.combo-opt small {
-  color: var(--fg-subtle);
-  font-variant-numeric: tabular-nums;
-}
-
-.combo-empty {
-  padding: 10px;
-  color: var(--fg-subtle);
-  font-size: 13px;
-  text-align: center;
 }
 
 /* ==========================================================================
@@ -1445,9 +1367,25 @@ pre {
   }
 
   .sidebar {
-    max-height: 40vh;
-    border-right: 0;
+    max-height: 168px;
     border-bottom: 1px solid var(--border);
+  }
+
+  /* Màn hẹp: nav xếp ngang, cuộn ngang thay vì chiếm nửa màn hình */
+  .nav {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 6px;
+    padding: 10px 12px;
+    overflow-x: auto;
+  }
+
+  .nav-item {
+    flex: 0 0 auto;
+  }
+
+  .nav-sep {
+    display: none;
   }
 
   .entry {

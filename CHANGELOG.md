@@ -16,11 +16,28 @@ Nhóm thay đổi dùng đúng 6 nhãn sau: **Thêm mới** (tính năng mới) 
 
 ### Thay đổi
 
-- **Tiêu đề nhóm ở sidebar nổi bật hơn** — mỗi nhóm giờ có dải nền riêng chạy
-  hết bề ngang, đường kẻ phân cách và số lượng nằm trong chip tròn bên phải, nên
-  ranh giới giữa các nhóm nhìn ra ngay khi lướt danh sách gần trăm mục.
-  - Tiêu đề **dính lại (sticky)** khi cuộn qua nhóm — luôn biết mình đang ở nhóm
-    nào mà không phải cuộn ngược lên.
+- **Bố cục tổng đổi sang 3 cấp: trang chủ → trang nhóm → trang chi tiết**, học
+  từ app chart-catalog cùng bộ.
+  - **Sidebar gọn còn 13 dòng** (296px → 232px): *Tất cả*, 10 nhóm kèm số lượng,
+    *Nhật ký thay đổi*. Trước đây cột trái liệt kê cả 93 component nên cuộn mãi
+    không hết; giờ danh sách nằm ở trang nhóm. Sidebar cũng bỏ nền và viền phải
+    cho nhẹ mắt.
+  - **Trang riêng cho từng nhóm** (`#/nhom/<id>`) — chỉ component của nhóm đó,
+    kèm chip lọc **Tất cả / Web / Mobile** ngay trong trang.
+  - **Trang chi tiết có link `← <tên nhóm>`** để quay lại đúng chỗ vừa rời đi.
+  - **Ô tìm kiếm chuyển lên thanh trên cùng**; gõ vào là khung nội dung thành
+    trang kết quả gom theo nhóm, thay vì lọc danh sách ở cột trái. Đi tới bất kỳ
+    trang nào cũng tự thoát khỏi kết quả tìm kiếm.
+  - Trên màn hẹp, sidebar thành một dải nhóm cuộn ngang thay vì chiếm 40% chiều
+    cao màn hình.
+
+### Gỡ bỏ
+
+- **Hai combobox lọc (nhóm, nền tảng) ở đầu sidebar** — lọc nhóm nay là chính
+  sidebar, lọc nền tảng thành chip trong trang nhóm. `Combobox.tsx` và phần CSS
+  `.combo-*` đã xoá.
+- Dải chip “nhảy tới nhóm” và nút *Chỉ xem nhóm này* ở trang chủ — thay bằng
+  link *Mở nhóm (N) →* và tiêu đề nhóm bấm được.
 
 ### Thêm mới
 

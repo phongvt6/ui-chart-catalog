@@ -3,6 +3,7 @@ import type { CatalogEntry, Platform } from '../types'
 import { CATEGORIES, PLATFORM_LABEL } from '../types'
 import { PhoneFrame } from './PhoneFrame'
 import { copyText } from '../lib/clipboard'
+import { hrefOf } from '../lib/route'
 
 type View = 'preview' | 'code'
 
@@ -31,6 +32,11 @@ export function EntryDetail({ entry }: { entry: CatalogEntry }) {
   return (
     <article className="entry">
       <header className="entry-head">
+        {category && (
+          <a className="back-link" href={hrefOf({ kind: 'category', id: category.id })}>
+            ← {category.nameVi}
+          </a>
+        )}
         <p className="entry-cat">
           {category?.nameVi} · {category?.nameEn}
         </p>

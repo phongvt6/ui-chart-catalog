@@ -36,13 +36,20 @@ npm run lint
 
 ## Cách dùng
 
+Điều hướng đi theo **3 cấp**: trang chủ → trang nhóm → trang chi tiết.
+
+- **Sidebar** chỉ là bộ chuyển nhóm: *Tất cả*, 10 nhóm kèm số lượng, và *Nhật ký
+  thay đổi*. Danh sách component nằm ở trang nhóm, không nhồi vào cột trái.
 - **Trang chủ** (`#/`, hoặc bấm logo) là thư viện toàn bộ 93 component xếp thành
   lưới thẻ theo nhóm. Mỗi thẻ là một **demo chạy thật** — bấm, gõ, kéo ngay trên
-  trang chủ, không cần mở trang chi tiết. Thẻ chỉ có demo + tên; diễn giải, công
-  dụng và đoạn code nằm ở trang chi tiết.
-- **Tìm kiếm** ở đầu cột trái: tìm theo tên Anh/Việt, alias, và cả nội dung mô
-  tả. Gõ **không dấu** vẫn ra kết quả (`o nhap` → *Ô nhập văn bản*).
-- **Hai bộ lọc** (nhóm, nền tảng) đều là combobox gõ-để-tìm, có ↑ ↓ Enter Esc.
+  trang chủ, không cần mở trang chi tiết.
+- **Trang nhóm** (`#/nhom/<id>`, ví dụ `#/nhom/media`) chỉ có component của
+  nhóm đó, kèm chip lọc **Tất cả / Web / Mobile**. Trang chi tiết có link
+  `← <tên nhóm>` để quay lại.
+- **Tìm kiếm** ở thanh trên cùng: gõ vào là cả khung nội dung thành trang kết
+  quả, gom theo nhóm. Tìm theo tên Anh/Việt, alias và nội dung mô tả; gõ **không
+  dấu** vẫn ra kết quả (`o nhap` → *Ô nhập văn bản*). Đi tới bất kỳ trang nào là
+  tự thoát khỏi kết quả tìm kiếm.
 - **Link chia sẻ**: mỗi component có URL riêng dạng `#/<id>`, ví dụ
   http://localhost:5179/#/bottom-sheet — dán vào chat là người kia mở đúng mục.
 - **Nhật ký thay đổi** (`#/changelog`) hiển thị ngay trong app, đọc thẳng từ
@@ -102,13 +109,16 @@ src/
     dataViz.tsx          Gantt, dòng thời gian, lưới thẻ, dải thẻ kéo ngang
   lib/
     clipboard.ts         copyText() — có phương án dự phòng khi clipboard bị chặn
+    route.ts             Router hash 3 cấp: home / nhóm / chi tiết / changelog
   components/
-    Combobox.tsx         Dropdown gõ-để-tìm dùng cho bộ lọc
     PhoneFrame.tsx       Khung điện thoại bọc demo mobile
-    HomePage.tsx         Trang chủ: lưới thẻ demo sống của toàn bộ component
+    EntryCard.tsx        Thẻ demo (dựng lười khi lọt tầm nhìn) dùng chung 3 trang
+    HomePage.tsx         Trang chủ: lưới thẻ toàn bộ component, gom theo nhóm
+    CategoryPage.tsx     Trang riêng của một nhóm + chip lọc nền tảng
+    SearchPage.tsx       Trang kết quả tìm kiếm
     ChangelogPage.tsx    Hiển thị CHANGELOG.md trong app (parser markdown tối giản)
     EntryDetail.tsx      Trang chi tiết một component
-  App.tsx                Shell: header + sidebar lọc + main
+  App.tsx                Shell: header (brand + tìm kiếm) + sidebar nhóm + main
   index.css              Design token + shell + thư viện primitive `.d-*` cho demo
 scripts/
   check-changelog.sh     Logic kiểm tra changelog (dùng chung cho hook + lệnh tay)
