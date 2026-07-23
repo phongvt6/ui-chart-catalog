@@ -30,6 +30,8 @@ Nhóm thay đổi dùng đúng 6 nhãn sau: **Thêm mới** (tính năng mới) 
     trang nào cũng tự thoát khỏi kết quả tìm kiếm.
   - Trên màn hẹp, sidebar thành một dải nhóm cuộn ngang thay vì chiếm 40% chiều
     cao màn hình.
+  - **Tên app trên header to và rõ hơn** (17px): bỏ dòng phụ “93 component · 10
+    nhóm” — số lượng đã có sẵn ngay cạnh từng nhóm ở sidebar.
 
 ### Gỡ bỏ
 

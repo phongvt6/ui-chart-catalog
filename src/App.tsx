@@ -53,10 +53,7 @@ export default function App() {
       <header className="app-head">
         <a className="brand" href={hrefOf({ kind: 'home' })} title="Về trang chủ">
           <span className="brand-mark">UI</span>
-          <span className="brand-names">
-            Từ điển UI
-            <em>{CATALOG.length} component · {CATEGORIES.length} nhóm</em>
-          </span>
+          <span className="brand-names">Từ điển UI</span>
         </a>
 
         <input
